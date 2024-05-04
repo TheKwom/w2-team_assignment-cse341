@@ -1,0 +1,16 @@
+const mongodb = require("../db/connect");
+
+const getData = async (req, res, next) => {
+  const result = await mongodb
+    .getDb()
+    .db("sample_mflix")
+    .collection("user")
+    .find();
+  result.toArray().then((lists) => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).json(lists[0]);
+  });
+  console.log(`Result: ${result}`);
+};
+
+module.exports = { getData };
